@@ -59,13 +59,13 @@ loop do
     Twitter.user_timeline(TWITTER_SCREEN_NAME, param_hash).each do |tweet|
       t = tweet.attrs
       PP.pp(t, STDERR)
-      id = t["id_str"].to_i
+      id = t[:id_str].to_i
       if lowest_tweet_id == 0
         lowest_tweet_id = id
       elsif id < lowest_tweet_id
         lowest_tweet_id = id
       end
-      id_str = t["id_str"]
+      id_str = t[:id_str]
       existingTweet =  tweetsColl.find_one("id_str" => id_str)
       if existingTweet      
         $stderr.printf("UPDATING tweet id:%s\n",id_str)
