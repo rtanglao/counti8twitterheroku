@@ -10,6 +10,7 @@ def get_connection
   @db_connection
 end
 
+puts ENV['MONGOHQ_URL']
 db = get_connection
 puts "Collections"
 puts "==========="
