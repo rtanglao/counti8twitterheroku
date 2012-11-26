@@ -11,6 +11,7 @@ def get_connection
 end
 
 puts ENV['MONGOHQ_URL']
+puts ARGV[0]
 db = get_connection
 puts "Collections"
 puts "==========="
