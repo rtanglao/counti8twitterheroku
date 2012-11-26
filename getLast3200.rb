@@ -58,7 +58,7 @@ loop do
   begin 
     Twitter.user_timeline(TWITTER_SCREEN_NAME, param_hash).each do |tweet|
       t = tweet.attrs
-      pp t
+      PP.pp(t, STDERR)
       id = t["id_str"].to_i
       if lowest_tweet_id == 0
         lowest_tweet_id = id
@@ -75,10 +75,10 @@ loop do
         tweetsColl.insert(t)
       end
     end
-    if Twitter.rate_limit_status.remaining_hits == 1
-      $stderr.print("rate limited, sleeping for an hour\n")
-      sleep 60 * 60
-    end
+    # if Twitter.rate_limit_status.remaining_hits == 1
+    #   $stderr.print("rate limited, sleeping for an hour\n")
+    #   sleep 60 * 60
+    # end
     num_tweets += 200
     batch += 1
     if num_tweets == 3200 || previous_lowest_tweet_id == lowest_tweet_id
