@@ -6,6 +6,7 @@ require 'date'
 require 'mongo'
 require 'twitter'
 require 'ap'
+require 'pp'
 
 def get_connection
   return @db_connection if @db_connection
@@ -57,7 +58,7 @@ loop do
   begin 
     Twitter.user_timeline(TWITTER_SCREEN_NAME, param_hash).each do |tweet|
       t = tweet.attrs
-      ap t
+      pp t
       id = t["id"]
       if lowest_tweet_id == 0
         lowest_tweet_id = id
