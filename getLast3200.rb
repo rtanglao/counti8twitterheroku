@@ -26,6 +26,7 @@ consumer_secret = ARGV[1]
 access_token = ARGV[2]
 access_token_secret = ARGV[3]
 
+db = get_connection
 tweetsColl = db.collection("tweets")
 
 batch = 1
