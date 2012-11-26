@@ -26,6 +26,9 @@ consumer_secret = ARGV[1]
 access_token = ARGV[2]
 access_token_secret = ARGV[3]
 
+$stderr.printf("consumer key:%s, consumer_secret:%s, access_token:%s, access_token_secret:%s\n",
+              consumer_key, consumer_secret, access_token, access_token_secret)
+
 Twitter.configure do |config|
   config.consumer_key = consumer_key
   config.consumer_secret = consumer_secret
