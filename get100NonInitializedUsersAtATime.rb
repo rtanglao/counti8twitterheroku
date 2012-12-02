@@ -43,9 +43,9 @@ usersColl = db.collection("users")
 def get100orLessUsers(id_str_array, usersColl)
   users = Twitter.users(id_str_array)
   users.each do |full_user_info|
-    full_user_info_hash = {}
-    full_user_info.instance_variables.each {|var| full_user_info_hash[var.to_s.delete("@")] = full_user_info.instance_variable_get(var) }
-    full_user_info_hash = full_user_info_hash.merge(full_user_info_hash).delete("attrs")
+    full_user_info_hash = full_user_info.attrs # {}
+    #full_user_info.instance_variables.each {|var| full_user_info_hash[var.to_s.delete("@")] = full_user_info.instance_variable_get(var) }
+    #full_user_info_hash = full_user_info_hash.merge(full_user_info_hash).delete("attrs")
 
     full_user_info_hash["user_info_initialized"] = true
     id_str = full_user_info_hash["id_str"]
