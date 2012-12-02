@@ -45,7 +45,9 @@ user_info =  user_info_object.attrs
 id_str  = user_info[:id_str]
 $stderr.printf("Twitter API FOUND user:%s id:%s\n", TWITTER_SCREEN_NAME, id_str)
 existingUser =  usersColl.find_one(:id_str => id_str)
-if existingUser      
+if existingUser  
+  $stderr.printf("UPDATING user id:%s\n",id_str)
+  user_info["user_info_initialized"] = true    
   usersColl.update({:id_str =>id_str}, user_info)
 else
   $stderr.printf("INSERTING user id:%s\n",id_str)
