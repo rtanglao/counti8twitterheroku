@@ -58,7 +58,8 @@ while cursor != 0 do
       end
     else
       $stderr.printf("INSERTING user id:%s\n",id)
-      user = { "id_str" => id, "user_info_initialized" => false,  "partial_following_screen_names" => [TWITTER_SCREEN_NAME]}
+      user = { "id_str" => id, "user_info_initialized" => false,  "partial_following_screen_names" => [TWITTER_SCREEN_NAME],
+               "tweets_retrieved_at" => Time.utc(2004, 3, 27) }
       usersColl.insert(user)
     end
   end

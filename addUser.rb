@@ -47,12 +47,15 @@ $stderr.printf("Twitter API FOUND user:%s id:%s\n", TWITTER_SCREEN_NAME, id_str)
 existingUser =  usersColl.find_one(:id_str => id_str)
 if existingUser  
   $stderr.printf("UPDATING user id:%s\n",id_str)
-  user_info["user_info_initialized"] = true    
+  user_info["user_info_initialized"] = true   
+  user_info["partial_following_screen_names"] = existingUser["partial_following_screen_names"]
+  user_info["tweets_retrieved_at"] = existingUser["tweets_retrieved_at"]
   usersColl.update({:id_str =>id_str}, user_info)
 else
   $stderr.printf("INSERTING user id:%s\n",id_str)
   user_info["user_info_initialized"] = true
   user_info["partial_following_screen_names"] = []
+  user_info["tweets_retrieved_at"] = Time.utc(2004, 3, 27) 
   usersColl.insert(user_info)
 end
 

@@ -5,7 +5,7 @@
 ./getTweets.sh KenHardie
 ./getTweets.sh TheBuzzer
 ./getTweets.sh BePartOfThePlan
-./getTweets.sh TransLinkedMedia
+./getTweets.sh TransLinkMedia
 ./getTweets.sh TransitPolice
 ./getTweets.sh GreenestCity
 ./getTweets.sh VanTransp2040
