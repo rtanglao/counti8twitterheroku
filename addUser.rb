@@ -40,9 +40,9 @@ end
 
 db = get_connection
 usersColl = db.collection("users")
-user_info = Twitter.user(TWITTER_SCREEN_NAME)
-attrs =  user_info.attrs
-id_str  = attrs[:id_str]
+user_info_object = Twitter.user(TWITTER_SCREEN_NAME)
+user_info =  user_info_object.attrs
+id_str  = user_info[:id_str]
 $stderr.printf("Twitter API FOUND user:%s id:%s\n", TWITTER_SCREEN_NAME, id_str)
 existingUser =  usersColl.find_one("id_str" => id)
 if existingUser      
