@@ -101,5 +101,5 @@ if existingUser
   $stderr.printf("UPDATING tweets_retrieved_at user id:%s\n",TWITTER_SCREEN_NAME)
   existingUser["tweets_retrieved_at"] = Time.now.utc
   usersColl.update({:screen_name => TWITTER_SCREEN_NAME},existingUser)
-else
+end
 $stderr.printf("DONE!\n")
