@@ -48,15 +48,15 @@ def get100orLessUsers(id_str_array, usersColl)
     full_user_info_hash = full_user_info.attrs 
     full_user_info_hash["user_info_initialized"] = true
     id_str = full_user_info_hash[:id_str]
-    mongo_user = usersColl.find_one(:id_str => id_str)
+    mongo_user = usersColl.find_one("id_str" => id_str)
     if mongo_user
       full_user_info_hash["partial_following_screen_names"] = mongo_user["partial_following_screen_names"]
       full_user_info_hash["tweets_retrieved_at"] = mongo_user["tweets_retrieved_at"]
       $stderr.printf("UPDATING id:%s\n", id_str)
-      usersColl.update({:id_str => id_str}, full_user_info_hash)
+      usersColl.update({"id_str" => id_str}, full_user_info_hash)
     else
       $stderr.printf("INSERTING id:%s\n", id_str)
-      usersColl.insert({:id_str => id_str}, full_user_info_hash)
+      usersColl.insert({"id_str" => id_str}, full_user_info_hash)
     end
   end
 end
@@ -67,8 +67,8 @@ usersColl.find().each do |u|
   $stderr.printf("USER:\n")
   pp u
   if !u["user_info_initialized"]
-    $stderr.printf("PUSHING:%d\n", u[:id_str].to_i)
-    id_str_array.push(u[:id_str].to_i)
+    $stderr.printf("PUSHING:%d\n", u["id_str"].to_i)
+    id_str_array.push(u["id_str"].to_i)
     number_blank_users_found += 1
   end
   if number_blank_users_found == 100

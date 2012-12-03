@@ -47,18 +47,18 @@ while cursor != 0 do
   followers = Twitter.follower_ids(TWITTER_SCREEN_NAME, :cursor => cursor, :stringify_ids => true)
   followers.ids.each do |id|
     $stderr.printf("FOUND user id:%s\n", id)
-    existingUser =  usersColl.find_one(:id_str => id)
+    existingUser =  usersColl.find_one("id_str" => id)
     if existingUser      
       if !existingUser["partial_following_screen_names"].include?(TWITTER_SCREEN_NAME)
         existingUser["partial_following_screen_names"].push(TWITTER_SCREEN_NAME)
         $stderr.printf("UPDATING user id:%s ADDING screen_name:%s\n",id, TWITTER_SCREEN_NAME )
-        usersColl.update({:id_str =>id}, existingUser)
+        usersColl.update({"id_str" =>id }, existingUser)
       else
         $stderr.printf("NOT UPDATING user id:%s because screen_name:%s is PRESENT\n",id, TWITTER_SCREEN_NAME )
       end
     else
       $stderr.printf("INSERTING user id:%s\n",id)
-      user = { :id_str => id, "user_info_initialized" => false,  "partial_following_screen_names" => [TWITTER_SCREEN_NAME],
+      user = { "id_str" => id, "user_info_initialized" => false,  "partial_following_screen_names" => [TWITTER_SCREEN_NAME],
                "tweets_retrieved_at" => Time.utc(2004, 3, 27) }
       usersColl.insert(user)
     end
