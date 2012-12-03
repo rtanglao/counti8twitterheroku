@@ -43,21 +43,18 @@ usersColl = db.collection("users")
 def get100orLessUsers(id_str_array, usersColl)
   users = Twitter.users(id_str_array)
   users.each do |full_user_info|
-    full_user_info_hash = full_user_info.attrs # {}
-    #full_user_info.instance_variables.each {|var| full_user_info_hash[var.to_s.delete("@")] = full_user_info.instance_variable_get(var) }
-    #full_user_info_hash = full_user_info_hash.merge(full_user_info_hash).delete("attrs")
-
+    full_user_info_hash = full_user_info.attrs 
     full_user_info_hash["user_info_initialized"] = true
-    id_str = full_user_info_hash["id_str"]
-    mongo_user = usersColl.find_one("id_str" => id_str)
+    id_str = full_user_info_hash[:id_str]
+    mongo_user = usersColl.find_one(:id_str => id_str)
     if mongo_user
       full_user_info_hash["partial_following_screen_names"] = mongo_user["partial_following_screen_names"]
       full_user_info_hash["tweets_retrieved_at"] = mongo_user["tweets_retrieved_at"]
       $stderr.printf("UPDATING id:%s\n", id_str)
-      usersColl.update({"id_str" => id_str}, full_user_info_hash)
+      usersColl.update({:id_str => id_str}, full_user_info_hash)
     else
       $stderr.printf("INSERTING id:%s\n", id_str)
-      usersColl.insert({"id_str" => id_str}, full_user_info_hash)
+      usersColl.insert({:id_str => id_str}, full_user_info_hash)
     end
   end
 end
@@ -66,7 +63,7 @@ number_blank_users_found = 0
 id_str_array = []
 usersColl.find().each do |u|
   if !u["user_info_initialized"]
-    id_str_array.push(u["id_str"].to_i)
+    id_str_array.push(u[:id_str].to_i)
     number_blank_users_found += 1
   end
   if number_blank_users_found == 100

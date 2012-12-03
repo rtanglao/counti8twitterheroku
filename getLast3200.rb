@@ -66,10 +66,10 @@ loop do
         lowest_tweet_id = id
       end
       id_str = t[:id_str]
-      existingTweet =  tweetsColl.find_one("id_str" => id_str)
+      existingTweet =  tweetsColl.find_one(:id_str => id_str)
       if existingTweet      
         $stderr.printf("UPDATING tweet id:%s\n",id_str)
-        tweetsColl.update({"id_str" =>id_str}, t)
+        tweetsColl.update({:id_str =>id_str}, t)
       else
         $stderr.printf("INSERTING tweet id:%s\n",id_str)
         tweetsColl.insert(t)
