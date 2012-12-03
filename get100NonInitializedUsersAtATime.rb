@@ -62,12 +62,12 @@ def get100orLessUsers(id_str_array, usersColl)
         usersColl.insert({"id_str" => id_str}, full_user_info_hash)
       end
     end
-  rescue Twitter::Error::ServiceUnavailable, Twitter::Error::BadGateway, Twitter::Error::GatewayTimeout, Twitter::Error::ServerError, Twitter::Error::ServerError::BadGateway
+  rescue # Twitter::Error::ServiceUnavailable, Twitter::Error::BadGateway, Twitter::Error::GatewayTimeout, Twitter::Error::ServerError, Twitter::Error::ServerError::BadGateway
     if tried_previously
       raise
     else
       tried_previously = true
-      $stderr.printf("twitter ruby exception error, re-trying in 30 seconds\n")
+      $stderr.printf("twitter ruby EXCEPTION error, re-trying in 30 seconds\n")
       sleep(30)
       retry
     end
