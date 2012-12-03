@@ -62,7 +62,7 @@ def get100orLessUsers(id_str_array, usersColl)
         usersColl.insert({"id_str" => id_str}, full_user_info_hash)
       end
     end
-  rescue Twitter::Error::ServiceUnavailable, Twitter::Error::BadGateway
+  rescue Twitter::Error::ServiceUnavailable, Twitter::Error::BadGateway, Twitter::Error::GatewayTimeout
     if tried_previously
       raise
     else
