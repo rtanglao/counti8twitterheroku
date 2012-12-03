@@ -45,8 +45,7 @@ def get100orLessUsers(id_str_array, usersColl)
   pp id_str_array
   tried_previously = false
   begin
-    users = Twitter.users(id_str_array)
-    users.each do |full_user_info|
+    Twitter.users(id_str_array).each do |full_user_info|
       full_user_info_hash = full_user_info.attrs 
       full_user_info_hash["user_info_initialized"] = true
       id_str = full_user_info_hash[:id_str]
