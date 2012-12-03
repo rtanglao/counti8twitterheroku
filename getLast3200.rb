@@ -59,7 +59,6 @@ loop do
     Twitter.user_timeline(TWITTER_SCREEN_NAME, param_hash).each do |tweet|
       t = tweet.attrs
       PP.pp(t, STDERR)
-      t[:screen_name].downcase!
       id = t[:id_str].to_i
       if lowest_tweet_id == 0
         lowest_tweet_id = id
