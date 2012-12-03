@@ -67,6 +67,7 @@ usersColl.find().each do |u|
   $stderr.printf("USER:\n")
   pp u
   if !u["user_info_initialized"]
+    $stderr.print("PUSHING:%d\n", u[:id_str].to_i)
     id_str_array.push(u[:id_str].to_i)
     number_blank_users_found += 1
   end
