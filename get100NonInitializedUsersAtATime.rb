@@ -50,12 +50,14 @@ def get100orLessUsers(id_str_array, usersColl)
     id_str = full_user_info_hash[:id_str]
     mongo_user = usersColl.find_one("id_str" => id_str)
     if mongo_user
+      full_user_info_hash["screen_name"] = mongo_user["screen_name"]
       full_user_info_hash["partial_following_screen_names"] = mongo_user["partial_following_screen_names"]
       full_user_info_hash["tweets_retrieved_at"] = mongo_user["tweets_retrieved_at"]
       $stderr.printf("UPDATING id:%s\n", id_str)
       usersColl.update({"id_str" => id_str}, full_user_info_hash)
     else
       $stderr.printf("INSERTING id:%s\n", id_str)
+      full_user_info_hash[:screen_name].downcase!
       usersColl.insert({"id_str" => id_str}, full_user_info_hash)
     end
   end

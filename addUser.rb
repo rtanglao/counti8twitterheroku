@@ -53,6 +53,7 @@ if existingUser
   usersColl.update({"id_str" =>id_str}, user_info)
 else
   $stderr.printf("INSERTING user id:%s\n",id_str)
+  user_info["screen_name"] = TWITTER_SCREEN_NAME
   user_info["user_info_initialized"] = true
   user_info["partial_following_screen_names"] = []
   user_info["tweets_retrieved_at"] = Time.utc(2004, 3, 27) 

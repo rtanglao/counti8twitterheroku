@@ -59,6 +59,7 @@ loop do
     Twitter.user_timeline(TWITTER_SCREEN_NAME, param_hash).each do |tweet|
       t = tweet.attrs
       PP.pp(t, STDERR)
+      t[:screen_name].downcase!
       id = t[:id_str].to_i
       if lowest_tweet_id == 0
         lowest_tweet_id = id
@@ -66,10 +67,10 @@ loop do
         lowest_tweet_id = id
       end
       id_str = t[:id_str]
-      existingTweet =  tweetsColl.find_one(:id_str => id_str)
+      existingTweet =  tweetsColl.find_one("id_str" => id_str)
       if existingTweet      
         $stderr.printf("UPDATING tweet id:%s\n",id_str)
-        tweetsColl.update({:id_str =>id_str}, t)
+        tweetsColl.update({"id_str" =>id_str}, t)
       else
         $stderr.printf("INSERTING tweet id:%s\n",id_str)
         tweetsColl.insert(t)
@@ -96,10 +97,10 @@ loop do
   end   
 end
 usersColl = db.collection("users")
-existingUser =  usersColl.find_one(:screen_name => TWITTER_SCREEN_NAME)
+existingUser =  usersColl.find_one("screen_name" => TWITTER_SCREEN_NAME)
 if existingUser  
   $stderr.printf("UPDATING tweets_retrieved_at user id:%s\n",TWITTER_SCREEN_NAME)
   existingUser["tweets_retrieved_at"] = Time.now.utc
-  usersColl.update({:screen_name => TWITTER_SCREEN_NAME},existingUser)
+  usersColl.update({"screen_name" => TWITTER_SCREEN_NAME},existingUser)
 end
 $stderr.printf("DONE!\n")
