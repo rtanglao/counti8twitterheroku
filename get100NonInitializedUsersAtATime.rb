@@ -41,6 +41,8 @@ db = get_connection
 usersColl = db.collection("users")
 
 def get100orLessUsers(id_str_array, usersColl)
+  $stderr.printf("id_str_array:\n")
+  pp id_str_array
   users = Twitter.users(id_str_array)
   users.each do |full_user_info|
     full_user_info_hash = full_user_info.attrs 
